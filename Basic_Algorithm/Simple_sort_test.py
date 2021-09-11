@@ -1,3 +1,2 @@
-l = [3,8,4,5,6,7,1,5,1,2,4,8,9,5,5,4]
-for a,b in zip(l,l[1:]):
-    print(a,b)
+coins = [0,1,2,3,4]
+print(list(reversed(coins)))
