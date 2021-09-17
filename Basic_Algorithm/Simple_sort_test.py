@@ -1,2 +1,3 @@
-coins = [0,1,2,3,4]
-print(list(reversed(coins)))
+dicta = {'G':0, 'C':1, 'F':2}
+a = 'GCF'
+print(all([1 if alphabet in dicta else 0 for alphabet in list(a)]))
