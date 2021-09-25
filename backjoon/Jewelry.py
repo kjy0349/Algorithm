@@ -1,19 +1,22 @@
-import sys; r = sys.stdin.readline
-N, K = list(map(int, r().rstrip().split()))
-jewelry = []
+import heapq
+import sys
+
+N, K = map(int, sys.stdin.readline().split())
+jewerly = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+bags = [int(sys.stdin.readline()) for _ in range(K)]
+jewerly.sort()
+bags.sort()
+
 result = 0
-for i in range(N):
-    jewelry.append(list(map(int, r().rstrip().split())))
-weights = []
-for i in range(K):
-    weights.append(int(r()))
-weights.sort(reverse=True)
-jewelry.sort(key= lambda x: x[1], reverse=True)
-for i in range(len(jewelry)):
-    if len(weights) == 0:
+temp = []
+
+for bag in bags:
+    while jewerly and bag >= jewerly[0][0]: # jewerly에 element가 존재하고, 가방 하나의 무게가 해당 보석의 무게보다 크거나 같으면
+        heapq.heappush(temp, -jewerly[0][1]) # temp list에 보석의 가격을 넣어준다. 최대힙 방식을 사용하기위해 음수로 넣어줌
+        heapq.heappop(jewerly) # 해당 보석(jewerly[0])을 가방에 넣었으므로, jewerly의 첫번째 요소를 뽑아준다.
+    if temp:
+        result += heapq.heappop(temp)
+    elif not jewerly:
         break
-    for j in range(len(weights)):
-        if jewelry[i][0] < weights[j]:
-            result += jewelry[i][1]
-            del jewelry[i], weights[j]
-print(result)
+print(-result)
+
