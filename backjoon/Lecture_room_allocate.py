@@ -1,20 +1,19 @@
 import sys
+import heapq
 N = int(sys.stdin.readline())
-lectures = [list(map(int, sys.stdin.readline().rstrip().split())) for _ in range(N)]
-lectures.sort(key=lambda x: x[0])
-count = 0
-allocated = []
-is_allocated = False
-for lecture in lectures:
-    for i, room in enumerate(allocated):
-        if lecture[0] >= room:
-            allocated[i] = lecture[1]
-            is_allocated = True
-            break
-    if is_allocated:
-        is_allocated = False
-        pass
-    else:
-        allocated.append(lecture[1])
+lectures = []
+rooms = []
+count = 1
+for i in range(N):
+    heapq.heappush(lectures, (list(map(int, sys.stdin.readline().rstrip().split()))))
+heapq.heappush(rooms, heapq.heappop(lectures)[1])
+for i in range(N-1):
+    end_time = heapq.heappop(rooms)
+    new_lecture = heapq.heappop(lectures)
+    if end_time > new_lecture[0]:
         count += 1
+        heapq.heappush(rooms, end_time)
+        heapq.heappush(rooms, new_lecture[1])
+    else:
+        heapq.heappush(rooms, new_lecture[1])
 print(count)
