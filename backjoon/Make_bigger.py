@@ -1,34 +1,36 @@
-import sys, heapq
-N, K = list(map(int, sys.stdin.readline().split()))
-num = sys.stdin.readline().rstrip()
-Number = {}
-max_num, max_index = 0, 0
+# 정답 코드
+import sys
+
+N, K = map(int, sys.stdin.readline().split())
+nums = list(map(int, sys.stdin.readline().strip()))
+
+result = []
+delNum = K
+
 for i in range(N):
-    if int(num[i]) > max_num:
-        max_num = int(num[i])
-        max_index = i
-    Number[i] = int(num[i])
-if max_index > 0:
-    min_heap = []
-    for i in range(max_index):
-        heapq.heappush(min_heap, (Number[i], i))
-    if len(min_heap) > K:
-        for i in range(K):
-            del Number[heapq.heappop(min_heap)[1]]
-    else:
-        K = K - len(min_heap)
-        for i in range(len(min_heap)):
-            del Number[heapq.heappop(min_heap)[1]]
-        for i in range(max_index, len(Number)):
-            heapq.heappush(min_heap, (Number[i], i))
-        while K > 0:
-            del Number[heapq.heappop(min_heap)[1]]
+    while delNum > 0 and result:
+        if result[len(result) - 1] < nums[i]:
+            result.pop()
+            delNum -= 1
+        else:
+            break
+    result.append(nums[i])
+
+for i in range(N - K):
+    print(result[i], end="")
+
+# 틀린 코드
+import sys
+
+N, K = map(int, sys.stdin.readline().split())
+numbers = list(map(int, sys.stdin.readline().strip()))
+result = []
+for i in range(N):
+    while result and K > 0:
+        if result[-1] < numbers[i]:
+            result.pop()
             K -= 1
-else:
-    min_heap = []
-    for i in range(len(Number)):
-        heapq.heappush(min_heap, (Number[i], i))
-    for i in range(K):
-        del Number[heapq.heappop(min_heap)[1]]
-result = list(map(str,Number.values()))
-print(''.join(result))
+        else:
+            break
+    result.append(numbers[i])
+print(''.join(list(map(str, result))))
