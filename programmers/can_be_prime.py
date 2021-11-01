@@ -1,30 +1,29 @@
-def is_prime(number):
-    is_prime = True
-    for i in range(number//2, number):
-        if number % i == 0:
-            is_prime = False
-            break
-    return is_prime
+import itertools
+def is_prime(num):
+    if num < 2:
+        return False
+    else:
+        is_pri = True
+        for i in range(2, num//2 + 1):
+            if num % i == 0:
+                is_pri = False
+                break
+            else:
+                pass
+        return is_pri
 
 def solution(numbers):
     answer = 0
-    numbers_convert = list(numbers)
-    for num in numbers_convert:
+    possibles = []
+    poss_dict = {}
+    for i in range(1, len(numbers)+1):
+        possibles.append(list(map(int, map("".join, itertools.permutations(numbers, i)))))
+    for i in range(len(possibles)):
+        for j in range(len(possibles[i])):
+            poss_dict[possibles[i][j]] = 0
+
+    for num in list(poss_dict.keys()):
         if is_prime(num):
             answer += 1
-    for i in range(len(numbers_convert)):
-        max_length = i + 1
-        numbers_c = numbers_convert
-        number = ""
-        for j in range()
-
-
-
-
     return answer
-
-# 7자리일경우
-# 1개씩 고르는 경우의 수 : nP1
-# 2개씩 고르는 경우의 수 : nP2
-# 3개씩 고르는 경우의 수 : nP3
-# .... : nPn
+print(solution('17'))
