@@ -18,3 +18,4 @@ def DFS_with_adj_list(graph, root):
             stack += graph[n] - set(visited)
     return visited
 print(DFS_with_adj_list(graph_list, root_node))
+
